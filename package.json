@@ -1,0 +1,30 @@
+{
+  "name": "rpgchatbot",
+  "version": "1.0.0",
+  "description": "Chatbot to generate RPG scenarios and (eventually) play short sessions",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BennyHarv3/rpgchatbot.git"
+  },
+  "keywords": [
+    "rpg",
+    "game",
+    "gaming",
+    "chatbot"
+  ],
+  "author": "Ben Harvill",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BennyHarv3/rpgchatbot/issues"
+  },
+  "homepage": "https://github.com/BennyHarv3/rpgchatbot#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "request": "^2.81.0"
+  }
+}
