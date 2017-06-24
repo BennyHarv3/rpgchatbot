@@ -4,6 +4,7 @@ var request = require('request')
 var app = express()
 
 var token = process.env.FbPageToken
+var secret = process.env.FbVerifyToken
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -20,7 +21,7 @@ app.get('/', function (req, res) {
 
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
-    if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
+    if (req.query['hub.verify_token'] === secret) {
         res.send(req.query['hub.challenge'])
     }
     res.send('Error, wrong token')
