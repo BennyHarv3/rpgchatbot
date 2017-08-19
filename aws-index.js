@@ -1,41 +1,41 @@
 'use strict';
 
-var token = process.env.FbPageToken;
-var secret = process.env.FbVerifyToken;
+var VERIFY_TOKEN = process.env.FbVerifyToken;
 
 var https = require('https');
 
-// Index route
+var PAGE_ACCESS_TOKEN = process.env.FbPageToken;
+
 exports.handler = (event, context, callback) => {
-    
+
   // process GET request
   if(event.queryStringParameters){
     var queryParams = event.queryStringParameters;
- 
-    var rVerifyToken = queryParams['hub.verify_token'];
- 
-    if (rVerifyToken === secret) {
+
+    var rVerifyToken = queryParams['hub.verify_token']
+
+    if (rVerifyToken === VERIFY_TOKEN) {
       var challenge = queryParams['hub.challenge']
-      
+
       var response = {
         'body': parseInt(challenge),
         'statusCode': 200
       };
-      
+
       callback(null, response);
     }else{
       var response = {
         'body': 'Error, wrong validation token',
         'statusCode': 422
       };
-      
+
       callback(null, response);
     }
-  
+
   // process POST request
   }else{
     var data = JSON.parse(event.body);
-     
+
     // Make sure this is a page subscription
     if (data.object === 'page') {
 
@@ -53,7 +53,7 @@ exports.handler = (event, context, callback) => {
           }
         });
     });
-    
+
     }
 
     // Assume all went well.
@@ -65,14 +65,14 @@ exports.handler = (event, context, callback) => {
       'body': "ok",
       'statusCode': 200
     };
-      
+
     callback(null, response);
   }
 }
 
 function receivedMessage(event) {
   console.log("Message data: ", event.message);
-  
+
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
   var timeOfMessage = event.timestamp;
@@ -118,7 +118,7 @@ function sendTextMessage(recipientId, messageText) {
 
 function callSendAPI(messageData) {
   var body = JSON.stringify(messageData);
-  var path = '/v2.6/me/messages?access_token=' + token;
+  var path = '/v2.6/me/messages?access_token=' + PAGE_ACCESS_TOKEN;
   var options = {
     host: "graph.facebook.com",
     path: path,
@@ -131,14 +131,14 @@ function callSendAPI(messageData) {
       str += chunk;
     });
     response.on('end', function () {
- 
+
     });
   }
   var req = https.request(options, callback);
   req.on('error', function(e) {
     console.log('problem with request: '+ e);
   });
- 
+
   req.write(body);
   req.end();
 }
