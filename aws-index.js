@@ -1,9 +1,8 @@
 'use strict';
 
-var VERIFY_TOKEN = process.env.FbVerifyToken;
-
 var https = require('https');
 
+var VERIFY_TOKEN = process.env.FbVerifyToken;
 var PAGE_ACCESS_TOKEN = process.env.FbPageToken;
 
 exports.handler = (event, context, callback) => {
